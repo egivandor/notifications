@@ -1,0 +1,8 @@
+<div class="page-header">
+  <%= do_render({
+    title: t(".#{params[:messagetype]}"),
+    columns: [:id, :subject],
+    items: @notifications
+    })
+  %>
+</div>
