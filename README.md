@@ -24,6 +24,14 @@ user.rb
       email
     end
 
+app_root/config/initializers/notifications.rb
+
+    module Notifications
+      class Engine < Rails::Engine
+        config.recipient_class = Conratesecurity::User
+      end
+    end
+
 ## Usage
 
 Render notification icons:

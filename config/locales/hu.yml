@@ -3,3 +3,22 @@ hu:
     messages:
       index:
         messages: 'Üzenetek'
+        notifications: 'Értesítések'
+        reports: 'Jelentések'
+        new: 'Új'
+      new:
+        messages: 'Új üzenet'
+        notifications: 'Értesítések'
+        reports: 'Jelentések'
+  activerecord:
+    models:
+      'notifications/message': 'Üzenet'
+    attributes:
+      'notifications/message':
+        id: 'AZ'
+        subject: 'Tárgy'
+        body: 'Szöveg'
+        sender: 'Feladó'
+        recipient: 'Címzett'
+        recipient_id: 'Címzett'
+        created_at: 'Létrehozva'

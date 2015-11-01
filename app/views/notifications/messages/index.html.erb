@@ -1,8 +1,15 @@
-<div class="page-header">
-  <%= do_render({
-    title: t(".#{params[:messagetype]}"),
-    columns: [:id, :subject],
-    items: @notifications
-    })
-  %>
-</div>
+<%= do_index({
+  title: t(".#{params[:messagetype]}"),
+  columns: [
+    :id,
+    :subject,
+    Btemplater::IndexDecorator.new(:sender, Proc.new{ |d| d.try(:pretty_name) }),
+    Btemplater::IndexDecorator.new(:recipient, Proc.new{ |d| d.try(:pretty_name) }),
+    Btemplater::IndexDecorator.new(:created_at, Proc.new{ |d| l(d) })
+  ],
+  items: @objects,
+  model: Notifications::Message
+  })
+%>
+
+<%= do_new_button({model: Notifications::Message}) %>

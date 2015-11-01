@@ -1,0 +1,18 @@
+<%= do_new({
+    title: t(".#{params[:messagetype]}"),
+    columns: [
+      :subject,
+      Btemplater::NewDecorator.new(
+        :recipient_id,
+        Proc.new do |f, c|
+          f.input c.name, collection: Notifications::Engine.config.recipient_class.all.map { |u| [u.pretty_name, u.id] }
+        end
+      ),
+      :body
+    ],
+    item: @obj,
+    model: Notifications::Message,
+    url: notifications.messages_path(params[:messagetype]),
+    method: :post
+  })
+%>
