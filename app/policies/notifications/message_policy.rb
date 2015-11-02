@@ -4,12 +4,28 @@ module Notifications
       [:subject, :body, :recipient_id]
     end
 
+    def index?
+      !@user.nil?
+    end
+
+    def show?
+      !@user.nil? && @record.owner == @user
+    end
+
     def new?
-      create?
+      !@user.nil?
     end
 
     def create?
-      ['reports', 'messages'].include? @record.messagetype
+      !@user.nil? && %w(reports messages).include?(@record.messagetype)
+    end
+
+    def reply?
+      create?
+    end
+
+    def destroy?
+      @record.owner == @user
     end
   end
 end

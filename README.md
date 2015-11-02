@@ -40,7 +40,11 @@ Render notification icons:
     <%= render 'notifications/shared/notifications', ntype: :messages, nicon: 'envelope', nclass: 'info'%>
     <%= render 'notifications/shared/notifications', ntype: :notifications, nicon: 'bell', nclass: 'warning'%>
 
-Send a desktop notification:
+Send a simple notification:
+
+    Notifications::Message.create!(subject: 'Message subject', body: 'Message body', sender: current_user, recipient: User.first, messagetype: :notification, owner: User.first)
+
+Extra: send a desktop notification:
 
     notifications.CheckNotification.desktopNotify('a', 'b')
 
