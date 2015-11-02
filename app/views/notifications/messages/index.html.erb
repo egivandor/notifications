@@ -8,7 +8,15 @@
     Btemplater::IndexDecorator.new(:created_at, Proc.new{ |d| l(d) })
   ],
   items: @objects,
-  model: Notifications::Message
+  model: Notifications::Message,
+  actions: [
+    Btemplater::ActionDecorator.new(
+      :show,
+      Proc.new { |objs| notifications.message_path(params[:messagetype], objs) },
+      t('actions.show'),
+      'file'
+    )
+  ]
   })
 %>
 
