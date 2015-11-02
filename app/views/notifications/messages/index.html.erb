@@ -1,23 +1,38 @@
 <%= do_index({
   title: t(".#{params[:messagetype]}"),
+  rowclass: lambda { |d| d.unread ? 'unread' : 'read' },
   columns: [
     :id,
     :subject,
-    Btemplater::IndexDecorator.new(:sender, Proc.new{ |d| d.try(:pretty_name) }),
-    Btemplater::IndexDecorator.new(:recipient, Proc.new{ |d| d.try(:pretty_name) }),
-    Btemplater::IndexDecorator.new(:created_at, Proc.new{ |d| l(d) })
+    Btemplater::IndexDecorator.new(:sender, lambda { |d| d.try(:pretty_name) }),
+    Btemplater::IndexDecorator.new(:recipient, lambda { |d| d.try(:pretty_name) }),
+    Btemplater::IndexDecorator.new(:created_at, lambda { |d| l(d) })
   ],
   items: @objects,
   model: Notifications::Message,
   actions: [
     Btemplater::ActionDecorator.new(
       :show,
-      Proc.new { |objs| notifications.message_path(params[:messagetype], objs) },
+      lambda { |objs| notifications.message_path(params[:messagetype], objs) },
       t('actions.show'),
       'file'
+    ),
+    Btemplater::ActionDecorator.new(
+      :reply,
+      lambda { |objs| notifications.reply_message_path(params[:messagetype], objs) },
+      t('actions.reply'),
+      'reply'
+    ),
+    Btemplater::ActionDecorator.new(
+      :destroy,
+      lambda { |objs| notifications.message_path(params[:messagetype], objs) },
+      t('actions.destroy'),
+      'trash',
+      :delete,
+      {confirm: t('actions.are_you_sure')}
     )
   ]
   })
 %>
 
-<%= do_new_button({model: Notifications::Message}) %>
+<%= do_new_button({model: Notifications::Message.new(messagetype: params[:messagetype])}) %>

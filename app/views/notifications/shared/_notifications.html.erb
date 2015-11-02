@@ -1,5 +1,5 @@
 <li>
-  <%= link_to notifications.messages_path(ntype) do %>
+  <%= link_to notifications.messages_path(ntype), title: t("notifications.messages.index.#{ntype}") do %>
     <span class="fa fa-<%= nicon %>"></span> <span id="notifications_<%= ntype %>_count" class="count-info label label-<%= nclass %>"></span>
   <% end %>
 </li>

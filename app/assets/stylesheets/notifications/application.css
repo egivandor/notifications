@@ -20,3 +20,11 @@
   right: 6px;
   top: 12px;
 }
+
+.notifications_message .unread {
+  font-weight: bold;
+}
+
+.notifications_message .read {
+  color: gray;
+}
