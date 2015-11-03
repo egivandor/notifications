@@ -1,14 +1,12 @@
 hu:
-  actions:
-    reply: 'Válasz'
   notifications:
-    re: 'Válasz: '
+    actions:
+      reply: 'Válasz'
     messages:
       index:
         messages: 'Üzenetek'
         notifications: 'Értesítések'
         reports: 'Jelentések'
-        new: 'Új'
       show:
         messages: '%{obj}'
         notifications: '%{obj}'
@@ -17,6 +15,16 @@ hu:
         messages: 'Új üzenet'
         notifications: 'Értesítések'
         reports: 'Jelentések'
+      reply:
+        messages: 'Új üzenet'
+    notifications:
+      re: 'Válasz: '
+      messages:
+        index:
+          messages: 'Üzenetek'
+          notifications: 'Értesítések'
+          reports: 'Jelentések'
+          new: 'Új'
   activerecord:
     models:
       'notifications/message': 'Üzenet'

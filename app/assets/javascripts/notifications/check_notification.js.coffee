@@ -1,13 +1,9 @@
 class CheckNotification
   constructor: (path, element, interval) ->
-    if typeof Turbolinks != 'undefined'
-      $(document).on 'page:change', ->
-        mf(path, element, interval)
-        return
-    else
-      $(document).ready ->
-        mf(path, element, interval)
-        return
+    $(document).ready ->
+      # if window[element] == null
+      mf(path, '#notifications_' + element + '_count', interval)
+        # return
 
   mf = (path, element, interval) ->
     window.setInterval(() ->
@@ -28,5 +24,5 @@ class CheckNotification
     myNotification = window.webkitNotifications.createNotification('icon.png', title, body);
     myNotification.show();
 
-window.notifications = {}
-window.notifications.CheckNotification = CheckNotification
+# window.notifications = {}
+window.notificationclass = CheckNotification

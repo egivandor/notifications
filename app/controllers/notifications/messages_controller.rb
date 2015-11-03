@@ -33,7 +33,7 @@ module Notifications
       @obj = Notifications::Message.new
       @obj.parent_id = @prev_obj.id
       @obj.recipient = @prev_obj.sender
-      @obj.subject = "#{t('notifications.re')}#{@prev_obj.subject}"
+      @obj.subject = "#{t('notifications.re', scope: :notifications)}#{@prev_obj.subject}"
       @obj.body = "\n\n#{@prev_obj.body.split("\n").map{|x| "> #{x}"}.join("\n")}"
     end
 

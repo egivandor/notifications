@@ -13,7 +13,7 @@ module Notifications
     end
 
     def new?
-      !@user.nil?
+      create?
     end
 
     def create?

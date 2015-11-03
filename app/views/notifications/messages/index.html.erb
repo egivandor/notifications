@@ -14,22 +14,22 @@
     Btemplater::ActionDecorator.new(
       :show,
       lambda { |objs| notifications.message_path(params[:messagetype], objs) },
-      t('actions.show'),
+      t('actions.show', scope: :btemplater),
       'file'
     ),
     Btemplater::ActionDecorator.new(
       :reply,
       lambda { |objs| notifications.reply_message_path(params[:messagetype], objs) },
-      t('actions.reply'),
+      t('actions.reply', scope: :notifications),
       'reply'
     ),
     Btemplater::ActionDecorator.new(
       :destroy,
       lambda { |objs| notifications.message_path(params[:messagetype], objs) },
-      t('actions.destroy'),
+      t('actions.destroy', scope: :btemplater),
       'trash',
       :delete,
-      {confirm: t('actions.are_you_sure')}
+      {confirm: t('actions.are_you_sure', scope: :btemplater)}
     )
   ]
   })
