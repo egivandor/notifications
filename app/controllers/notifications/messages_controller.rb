@@ -19,6 +19,7 @@ module Notifications
 
     def new
       @obj = Notifications::Message.new
+      @obj.messagetype = params[:messagetype]
     end
 
     def create
@@ -62,7 +63,11 @@ module Notifications
     end
 
     def count
-      render json: Notifications::Message.where(messagetype: params[:messagetype]).where(unread: true).where(owner: current_user).count
+      if user_signed_in?
+        render json: 0
+      else
+        render json: Notifications::Message.where(messagetype: params[:messagetype]).where(unread: true).where(owner: current_user).count
+      end
     end
 
     def before_save_create(obj)

@@ -7,7 +7,7 @@
 <% if user_signed_in? %>
   <script type="text/javascript">
     $(document).on('ready', function() {
-      window['<%= ntype %>'] = new notificationclass('<%= notifications.messages_count_path(ntype) %>', '<%= ntype %>', 5000)
+      window['<%= ntype %>'] = new notificationclass('<%= notifications.messages_count_path(ntype) %>', '<%= ntype %>', 60000)
     });
 
   </script>
