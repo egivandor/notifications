@@ -28,7 +28,11 @@ app_root/config/initializers/notifications.rb
 
     module Notifications
       class Engine < Rails::Engine
-        config.recipient_class = Conratesecurity::User
+        config.notifications_recipient_class = User
+        config.reports_recipient_class = Admin
+        config.reports_recipient_decorator = Proc.new do |f, c|
+            f.input c.name, collection: Notifications::Engine.config.reports_recipient_class.all.map { |u| [u.pretty_name, u.id] }
+        end
       end
     end
 
@@ -40,9 +44,9 @@ Render notification icons:
     <%= render 'notifications/shared/notifications', ntype: :messages, nicon: 'envelope', nclass: 'info'%>
     <%= render 'notifications/shared/notifications', ntype: :notifications, nicon: 'bell', nclass: 'warning'%>
 
-Send a simple notification:
+Send a simple message:
 
-    Notifications::Message.create!(subject: 'Message subject', body: 'Message body', sender: current_user, recipient: User.first, messagetype: :notification, owner: User.first)
+    Notifications::Message.create!(subject: 'Message subject', body: 'Message body', sender: current_user, recipient: User.first, messagetype: :messages, owner: User.first, unread: true)
 
 Extra: send a desktop notification:
 
@@ -52,7 +56,15 @@ Extra: send a desktop notification:
 
 Send a notification to one recipient:
 
-    Notifications::Delivery::Simple.new('Test', 'This is a <b>Test</b> message!', nil, Conratesecurity::User.first, nil, :notifications)
+    Notifications::Delivery::Simple.new.notification(User.first, 'Test', 'This is a <b>Test</b> message!')
+
+Send a message to one recipient:
+
+    Notifications::Delivery::Simple.new.message(User.first, current_user, 'Test', 'This is a <b>Test</b> message!', nil)
+
+Send a report to one recipient:
+
+    Notifications::Delivery::Simple.new.message(User.first, current_user, 'Test', 'This is a <b>Test</b> message!', nil)
 
 ## Requirements
 

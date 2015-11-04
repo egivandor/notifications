@@ -64,14 +64,14 @@ module Notifications
 
     def count
       if user_signed_in?
-        render json: 0
-      else
         render json: Notifications::Message.where(messagetype: params[:messagetype]).where(unread: true).where(owner: current_user).count
+      else
+        render json: 0
       end
     end
 
     def before_save_create(obj)
-      obj.recipient_type = Notifications::Engine.config.recipient_class
+      obj.recipient_type = Notifications::Engine.config.send("#{params[:messagetype]}_recipient_class")
       obj.messagetype = params[:messagetype]
       obj.unread = false
       obj.owner = current_user

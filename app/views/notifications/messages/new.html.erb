@@ -4,9 +4,7 @@
       :subject,
       Btemplater::NewDecorator.new(
         :recipient_id,
-        Proc.new do |f, c|
-          f.input c.name, collection: Notifications::Engine.config.recipient_class.all.map { |u| [u.pretty_name, u.id] }
-        end
+        Notifications::Engine.config.send("#{params[:messagetype]}_recipient_decorator")
       ),
       :body
     ],

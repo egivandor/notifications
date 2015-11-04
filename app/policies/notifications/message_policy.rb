@@ -24,6 +24,10 @@ module Notifications
       create?
     end
 
+    def messages_count?
+      index?
+    end
+
     def destroy?
       @record.owner == @user
     end
