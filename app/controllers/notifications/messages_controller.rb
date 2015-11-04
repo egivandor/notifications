@@ -8,7 +8,7 @@ module Notifications
 
     def index
       messagetype = params[:messagetype]
-      @objects = Notifications::Message.where(messagetype: messagetype).where(owner: current_user).order('created_at desc').page(params[:page])
+      @objects = Notifications::Message.where(messagetype: messagetype).where(owner: Btemplater::Engine.config.current_user_entity.call(self)).order('created_at desc').page(params[:page])
     end
 
     def show
@@ -44,10 +44,10 @@ module Notifications
         @obj = Notifications::Message.new
         @obj.parent_id = @prev_obj.id
         @obj.recipient = @prev_obj.sender
-        @obj.sender = current_user
+        @obj.sender = Btemplater::Engine.config.current_user_entity.call(self)
         @obj.subject = params[:message][:subject]
         @obj.body = params[:message][:body]
-        @obj.owner = current_user
+        @obj.owner = Btemplater::Engine.config.current_user_entity.call(self)
         @obj.messagetype = @prev_obj.messagetype
         @obj.unread = false
         @obj.save!
@@ -64,7 +64,7 @@ module Notifications
 
     def count
       if user_signed_in?
-        render json: Notifications::Message.where(messagetype: params[:messagetype]).where(unread: true).where(owner: current_user).count
+        render json: Notifications::Message.where(messagetype: params[:messagetype]).where(unread: true).where(owner: Btemplater::Engine.config.current_user_entity.call(self)).count
       else
         render json: 0
       end
@@ -74,8 +74,8 @@ module Notifications
       obj.recipient_type = Notifications::Engine.config.send("#{params[:messagetype]}_recipient_class")
       obj.messagetype = params[:messagetype]
       obj.unread = false
-      obj.owner = current_user
-      obj.sender = current_user
+      obj.owner = Btemplater::Engine.config.current_user_entity.call(self)
+      obj.sender = Btemplater::Engine.config.current_user_entity.call(self)
     end
 
     private

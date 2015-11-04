@@ -46,7 +46,7 @@ Render notification icons:
 
 Send a simple message:
 
-    Notifications::Message.create!(subject: 'Message subject', body: 'Message body', sender: current_user, recipient: User.first, messagetype: :messages, owner: User.first, unread: true)
+    Notifications::Message.create!(subject: 'Message subject', body: 'Message body', sender: Btemplater::Engine.config.current_user_entity.call(self), recipient: User.first, messagetype: :messages, owner: User.first, unread: true)
 
 Extra: send a desktop notification:
 
@@ -60,11 +60,11 @@ Send a notification to one recipient:
 
 Send a message to one recipient:
 
-    Notifications::Delivery::Simple.new.message(User.first, current_user, 'Test', 'This is a <b>Test</b> message!', nil)
+    Notifications::Delivery::Simple.new.message(User.first, Btemplater::Engine.config.current_user_entity.call(self), 'Test', 'This is a <b>Test</b> message!', nil)
 
 Send a report to one recipient:
 
-    Notifications::Delivery::Simple.new.message(User.first, current_user, 'Test', 'This is a <b>Test</b> message!', nil)
+    Notifications::Delivery::Simple.new.message(User.first, Btemplater::Engine.config.current_user_entity.call(self), 'Test', 'This is a <b>Test</b> message!', nil)
 
 ## Requirements
 
