@@ -5,5 +5,7 @@ module Notifications
     belongs_to :owner, polymorphic: true
 
     validates :subject, presence: true
+    validates :recipient_id, presence: true
+    validates :recipient_type, presence: true
   end
 end

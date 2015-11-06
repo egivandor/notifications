@@ -18,12 +18,6 @@
       'file'
     ),
     Btemplater::ActionDecorator.new(
-      :reply,
-      lambda { |objs| notifications.reply_message_path(params[:messagetype], objs) },
-      t('actions.reply', scope: :notifications),
-      'reply'
-    ),
-    Btemplater::ActionDecorator.new(
       :destroy,
       lambda { |objs| notifications.message_path(params[:messagetype], objs) },
       t('actions.destroy', scope: :btemplater),

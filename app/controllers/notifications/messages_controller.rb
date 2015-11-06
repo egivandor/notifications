@@ -27,11 +27,14 @@ module Notifications
         do_create(params, Notifications::Message, notifications.messages_path(params[:messagetype]))
         create_duplicate(@obj)
       end
+    rescue ActiveRecord::RecordInvalid
+      render :new
     end
 
     def reply
       @prev_obj = Notifications::Message.find(params[:id])
       @obj = Notifications::Message.new
+      @obj.messagetype = @prev_obj.messagetype
       @obj.parent_id = @prev_obj.id
       @obj.recipient = @prev_obj.sender
       @obj.subject = "#{t('notifications.re', scope: :notifications)}#{@prev_obj.subject}"
@@ -85,7 +88,7 @@ module Notifications
       # tmp = other.sender
       other.owner = other.recipient
       other.unread = true
-      other.save!
+      other.save
     end
   end
 end

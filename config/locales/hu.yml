@@ -1,4 +1,7 @@
 hu:
+  btemplater:
+    actions:
+      reply: 'Válasz'
   notifications:
     actions:
       reply: 'Válasz'

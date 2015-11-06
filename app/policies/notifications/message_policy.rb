@@ -24,6 +24,10 @@ module Notifications
       create?
     end
 
+    def do_reply?
+      reply?
+    end
+
     def messages_count?
       index?
     end
